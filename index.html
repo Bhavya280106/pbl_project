@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Driver Drowsiness Detection</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            background-color: #111;
+            color: white;
+        }
+
+        .box {
+            width: 60%;
+            margin: auto;
+            padding: 20px;
+            border: 2px solid white;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        h1 {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Driver Drowsiness Detection System</h1>
+
+    <div class="box">
+        <h2>Project Overview</h2>
+        <p>
+            This project detects driver drowsiness using Computer Vision.
+            It uses Haar Cascade classifiers to detect face and eyes.
+            If eyes remain closed for a certain number of frames,
+            the system triggers a DROWSY ALERT.
+        </p>
+
+        <h2>Tech Stack Used</h2>
+        <p>Python, OpenCV, Haar Cascade Classifiers</p>
+
+        <h2>How It Works</h2>
+        <p>
+            1. Camera captures live video.<br>
+            2. Face is detected.<br>
+            3. Eyes are detected inside face region.<br>
+            4. If eyes remain closed for continuous frames → Alert is displayed.
+        </p>
+
+        <h2>GitHub Repository</h2>
+        <p>
+            <a href="https://github.com/Bhavya280106/driver-drowsiness-detection" target="_blank">
+                View Source Code
+            </a>
+        </p>
+    </div>
+
+</body>
+</html>
