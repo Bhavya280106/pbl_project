@@ -8,7 +8,7 @@ eye_cascade = cv2.CascadeClassifier("haarcascades/haarcascade_eye.xml")
 cap = cv2.VideoCapture(0)
 
 eye_closed_frames = 0
-THRESHOLD = 20   # frames count for drowsy detection
+THRESHOLD = 8   # frames count for drowsy detection
 
 print("Starting Driver Drowsiness Detection...")
 
