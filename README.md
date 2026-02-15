@@ -26,7 +26,8 @@ If the eyes remain closed for a continuous number of frames, a **DROWSY ALERT** 
 ---
 
 ## 🚀 Live Demo
-🔗 https://bhavya280106.github.io/driver-drowsiness-detection/
+🔗 https://bhavya280106.github.io/pbl_project/
+
 
 ---
 
