@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ToyBank — Joy for Every Child</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FDF6EC;
+    --warm: #F5ECD7;
+    --rust: #C85A2A;
+    --rust-light: #E87A4A;
+    --rust-pale: #FAEAE0;
+    --teal: #2A7A6F;
+    --teal-light: #3A9E90;
+    --teal-pale: #E0F2EF;
+    --gold: #D4A030;
+    --gold-pale: #FDF3DC;
+    --ink: #1C1410;
+    --ink-mid: #4A3728;
+    --ink-light: #8A7060;
+    --white: #FFFFFF;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 60px;
+    background: rgba(253,246,236,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,90,42,0.1);
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 22px; font-weight: 900;
+    color: var(--rust);
+    letter-spacing: -0.5px;
+  }
+  .nav-logo span { color: var(--teal); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    text-decoration: none; font-size: 14px; font-weight: 500;
+    color: var(--ink-mid); letter-spacing: 0.3px;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--rust); }
+  .nav-cta {
+    background: var(--rust); color: var(--white);
+    border: none; padding: 10px 24px; border-radius: 100px;
+    font-family: var(--font-body); font-size: 14px; font-weight: 500;
+    cursor: pointer; transition: background 0.2s, transform 0.15s;
+  }
+  .nav-cta:hover { background: var(--rust-light); transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .hero-bg-pattern {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      radial-gradient(circle at 15% 85%, rgba(200,90,42,0.06) 0%, transparent 50%),
+      radial-gradient(circle at 85% 20%, rgba(42,122,111,0.07) 0%, transparent 50%);
+  }
+
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 80px 60px 80px 80px;
+    position: relative; z-index: 2;
+  }
+
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--gold-pale); color: var(--gold);
+    border: 1px solid rgba(212,160,48,0.3);
+    padding: 6px 16px; border-radius: 100px;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.8px;
+    text-transform: uppercase; margin-bottom: 28px;
+    width: fit-content;
+  }
+  .hero-tag::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--gold); animation: pulse-dot 2s ease-in-out infinite;
+  }
+  @keyframes pulse-dot {
+    0%,100% { opacity:1; transform:scale(1); }
+    50% { opacity:0.5; transform:scale(1.4); }
+  }
+
+  .hero-headline {
+    font-family: var(--font-display);
+    font-size: clamp(42px, 5vw, 68px);
+    font-weight: 900; line-height: 1.05;
+    color: var(--ink); margin-bottom: 24px;
+  }
+  .hero-headline em { color: var(--rust); font-style: italic; }
+  .hero-headline .teal { color: var(--teal); }
+
+  .hero-sub {
+    font-size: 17px; line-height: 1.7; color: var(--ink-mid);
+    max-width: 460px; margin-bottom: 44px; font-weight: 300;
+  }
+
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: var(--rust); color: var(--white);
+    border: none; padding: 16px 32px; border-radius: 100px;
+    font-family: var(--font-body); font-size: 15px; font-weight: 500;
+    cursor: pointer; text-decoration: none; display: inline-block;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(200,90,42,0.25);
+  }
+  .btn-primary:hover {
+    background: var(--rust-light); transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(200,90,42,0.35);
+  }
+
+  .btn-outline {
+    background: transparent; color: var(--ink);
+    border: 1.5px solid rgba(28,20,16,0.2); padding: 15px 32px;
+    border-radius: 100px; font-family: var(--font-body);
+    font-size: 15px; font-weight: 500; cursor: pointer;
+    text-decoration: none; display: inline-block;
+    transition: border-color 0.2s, color 0.2s, transform 0.2s;
+  }
+  .btn-outline:hover {
+    border-color: var(--rust); color: var(--rust); transform: translateY(-2px);
+  }
+
+  .hero-stats {
+    display: flex; gap: 40px; margin-top: 56px;
+    padding-top: 40px; border-top: 1px solid rgba(28,20,16,0.08);
+  }
+  .stat { display: flex; flex-direction: column; gap: 4px; }
+  .stat-num {
+    font-family: var(--font-display); font-size: 32px; font-weight: 900;
+    color: var(--rust);
+  }
+  .stat-label { font-size: 12px; color: var(--ink-light); font-weight: 500; letter-spacing: 0.3px; }
+
+  /* Hero right — illustration area */
+  .hero-right {
+    position: relative; display: flex; align-items: center; justify-content: center;
+    padding: 80px 60px;
+    background: var(--warm);
+    clip-path: polygon(8% 0%, 100% 0%, 100% 100%, 0% 100%);
+  }
+
+  .hero-card-stack { position: relative; width: 340px; height: 420px; }
+
+  .h-card {
+    position: absolute;
+    background: var(--white);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 8px 40px rgba(28,20,16,0.1);
+  }
+
+  .h-card-1 {
+    width: 280px; top: 40px; left: 0;
+    transform: rotate(-4deg);
+    animation: float1 4s ease-in-out infinite;
+  }
+  .h-card-2 {
+    width: 260px; top: 140px; right: 0;
+    transform: rotate(3deg);
+    animation: float2 5s ease-in-out infinite 0.5s;
+  }
+  .h-card-3 {
+    width: 240px; bottom: 20px; left: 30px;
+    transform: rotate(-1deg);
+    animation: float3 4.5s ease-in-out infinite 1s;
+  }
+
+  @keyframes float1 { 0%,100%{transform:rotate(-4deg) translateY(0)} 50%{transform:rotate(-4deg) translateY(-8px)} }
+  @keyframes float2 { 0%,100%{transform:rotate(3deg) translateY(0)} 50%{transform:rotate(3deg) translateY(-10px)} }
+  @keyframes float3 { 0%,100%{transform:rotate(-1deg) translateY(0)} 50%{transform:rotate(-1deg) translateY(-6px)} }
+
+  .h-card-icon {
+    width: 40px; height: 40px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; margin-bottom: 12px;
+  }
+  .icon-rust { background: var(--rust-pale); }
+  .icon-teal { background: var(--teal-pale); }
+  .icon-gold { background: var(--gold-pale); }
+
+  .h-card-title { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 4px; }
+  .h-card-sub { font-size: 11px; color: var(--ink-light); }
+  .h-card-tag {
+    display: inline-block; margin-top: 10px;
+    padding: 3px 10px; border-radius: 100px; font-size: 10px; font-weight: 500;
+  }
+  .tag-green { background: var(--teal-pale); color: var(--teal); }
+  .tag-orange { background: var(--rust-pale); color: var(--rust); }
+  .tag-yellow { background: var(--gold-pale); color: var(--gold); }
+
+  /* ── HOW IT WORKS ── */
+  .section { padding: 100px 80px; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  .section-eyebrow {
+    font-size: 11px; font-weight: 500; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--rust);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 900; line-height: 1.1;
+    color: var(--ink); margin-bottom: 16px;
+  }
+  .section-title em { color: var(--rust); font-style: italic; }
+
+  .section-sub {
+    font-size: 16px; color: var(--ink-light); line-height: 1.7;
+    max-width: 520px; font-weight: 300; margin-bottom: 60px;
+  }
+
+  .steps {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 2px; background: rgba(28,20,16,0.06); border-radius: 24px;
+    overflow: hidden;
+  }
+
+  .step {
+    background: var(--cream); padding: 44px 36px;
+    transition: background 0.3s;
+  }
+  .step:hover { background: var(--white); }
+  .step:first-child { border-radius: 24px 0 0 24px; }
+  .step:last-child { border-radius: 0 24px 24px 0; }
+
+  .step-num {
+    font-family: var(--font-display);
+    font-size: 64px; font-weight: 900; line-height: 1;
+    color: rgba(200,90,42,0.12); margin-bottom: 16px;
+  }
+
+  .step-icon {
+    width: 48px; height: 48px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; margin-bottom: 20px;
+  }
+
+  .step-title {
+    font-family: var(--font-display); font-size: 20px; font-weight: 700;
+    color: var(--ink); margin-bottom: 10px;
+  }
+
+  .step-desc { font-size: 14px; color: var(--ink-mid); line-height: 1.7; font-weight: 300; }
+
+  /* ── LISTING FORM ── */
+  .listing-section {
+    background: var(--warm);
+    padding: 100px 80px;
+  }
+  .listing-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: start;
+  }
+
+  .listing-info { position: sticky; top: 100px; }
+
+  .listing-reasons { margin-top: 40px; display: flex; flex-direction: column; gap: 20px; }
+
+  .reason {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 20px; background: var(--white);
+    border-radius: 16px; transition: transform 0.2s;
+  }
+  .reason:hover { transform: translateX(4px); }
+
+  .reason-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+
+  .reason-text h4 { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 4px; }
+  .reason-text p { font-size: 13px; color: var(--ink-light); line-height: 1.6; }
+
+  /* Form */
+  .listing-form {
+    background: var(--white); border-radius: 28px;
+    padding: 48px; box-shadow: 0 8px 60px rgba(28,20,16,0.08);
+  }
+
+  .form-title {
+    font-family: var(--font-display); font-size: 26px; font-weight: 700;
+    color: var(--ink); margin-bottom: 6px;
+  }
+  .form-sub { font-size: 14px; color: var(--ink-light); margin-bottom: 36px; }
+
+  .form-group { margin-bottom: 20px; }
+  .form-label {
+    display: block; font-size: 12px; font-weight: 500;
+    color: var(--ink-mid); margin-bottom: 8px; letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+
+  .form-input, .form-select, .form-textarea {
+    width: 100%; padding: 13px 16px;
+    border: 1.5px solid rgba(28,20,16,0.1);
+    border-radius: 12px; font-family: var(--font-body);
+    font-size: 14px; color: var(--ink); background: var(--cream);
+    transition: border-color 0.2s, background 0.2s;
+    outline: none;
+    -webkit-appearance: none; appearance: none;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--rust); background: var(--white);
+  }
+  .form-textarea { resize: vertical; min-height: 90px; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .upload-zone {
+    border: 2px dashed rgba(200,90,42,0.25);
+    border-radius: 12px; padding: 32px;
+    text-align: center; cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    background: var(--rust-pale);
+  }
+  .upload-zone:hover { border-color: var(--rust); background: rgba(200,90,42,0.05); }
+  .upload-icon { font-size: 28px; margin-bottom: 8px; }
+  .upload-text { font-size: 13px; color: var(--ink-mid); }
+  .upload-hint { font-size: 11px; color: var(--ink-light); margin-top: 4px; }
+
+  .condition-options { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+  .cond-opt { position: relative; }
+  .cond-opt input { position: absolute; opacity: 0; }
+  .cond-label {
+    display: block; text-align: center; padding: 10px 8px;
+    border: 1.5px solid rgba(28,20,16,0.1); border-radius: 10px;
+    font-size: 13px; cursor: pointer; transition: all 0.2s;
+    color: var(--ink-mid);
+  }
+  .cond-opt input:checked + .cond-label {
+    border-color: var(--rust); background: var(--rust-pale); color: var(--rust);
+    font-weight: 500;
+  }
+
+  .form-submit {
+    width: 100%; padding: 16px; background: var(--rust);
+    color: var(--white); border: none; border-radius: 14px;
+    font-family: var(--font-body); font-size: 15px; font-weight: 500;
+    cursor: pointer; margin-top: 8px;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(200,90,42,0.3);
+  }
+  .form-submit:hover {
+    background: var(--rust-light); transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(200,90,42,0.4);
+  }
+
+  /* ── HOSPITALS ── */
+  .hospitals-section { padding: 100px 80px; }
+  .hospitals-inner { max-width: 1100px; margin: 0 auto; }
+
+  .hospitals-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 48px;
+  }
+
+  .hospital-grid {
+    display: grid; grid-template-columns: repeat(3,1fr); gap: 24px;
+  }
+
+  .hospital-card {
+    background: var(--white); border-radius: 20px;
+    overflow: hidden; border: 1px solid rgba(28,20,16,0.06);
+    transition: transform 0.25s, box-shadow 0.25s;
+    cursor: pointer;
+  }
+  .hospital-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(28,20,16,0.1);
+  }
+
+  .hospital-banner {
+    height: 120px; display: flex; align-items: center; justify-content: center;
+    font-size: 48px; position: relative; overflow: hidden;
+  }
+  .banner-rust { background: linear-gradient(135deg, #FAEAE0, #F5D5C5); }
+  .banner-teal { background: linear-gradient(135deg, #E0F2EF, #C5E8E4); }
+  .banner-gold { background: linear-gradient(135deg, #FDF3DC, #FAE8B5); }
+
+  .hospital-body { padding: 24px; }
+
+  .hospital-name {
+    font-family: var(--font-display); font-size: 18px; font-weight: 700;
+    color: var(--ink); margin-bottom: 4px;
+  }
+  .hospital-city { font-size: 12px; color: var(--ink-light); margin-bottom: 16px; }
+
+  .hospital-needs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+  .need-tag {
+    padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 500;
+    background: var(--cream);
+    color: var(--ink-mid); border: 1px solid rgba(28,20,16,0.08);
+  }
+
+  .hospital-urgency {
+    display: flex; align-items: center; gap: 8px;
+    padding-top: 14px; border-top: 1px solid rgba(28,20,16,0.06);
+  }
+  .urgency-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+  .dot-red { background: #E03030; }
+  .dot-orange { background: var(--rust); animation-delay: 0.5s; }
+  .dot-green { background: var(--teal); animation-delay: 1s; }
+  .urgency-text { font-size: 12px; font-weight: 500; }
+  .urgent-red { color: #E03030; }
+  .urgent-orange { color: var(--rust); }
+  .urgent-green { color: var(--teal); }
+
+  /* ── IMPACT ── */
+  .impact-section {
+    background: var(--ink); padding: 100px 80px;
+    position: relative; overflow: hidden;
+  }
+  .impact-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(circle at 10% 50%, rgba(200,90,42,0.12) 0%, transparent 50%),
+      radial-gradient(circle at 90% 50%, rgba(42,122,111,0.12) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .impact-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 2; }
+
+  .impact-title {
+    font-family: var(--font-display); font-size: clamp(36px,5vw,56px); font-weight: 900;
+    color: var(--white); text-align: center; margin-bottom: 16px;
+  }
+  .impact-title em { color: var(--rust-light); font-style: italic; }
+
+  .impact-sub {
+    text-align: center; font-size: 16px; color: rgba(255,255,255,0.5);
+    font-weight: 300; margin-bottom: 70px;
+  }
+
+  .impact-grid {
+    display: grid; grid-template-columns: repeat(4,1fr); gap: 2px;
+    background: rgba(255,255,255,0.06); border-radius: 24px; overflow: hidden;
+    margin-bottom: 60px;
+  }
+
+  .impact-stat {
+    padding: 44px 32px; text-align: center;
+    background: rgba(28,20,16,0.6);
+    transition: background 0.3s;
+  }
+  .impact-stat:hover { background: rgba(200,90,42,0.15); }
+
+  .impact-num {
+    font-family: var(--font-display); font-size: 52px; font-weight: 900;
+    color: var(--white); line-height: 1; margin-bottom: 8px;
+  }
+  .impact-num span { color: var(--rust-light); }
+
+  .impact-label { font-size: 13px; color: rgba(255,255,255,0.5); font-weight: 300; }
+
+  .impact-quote {
+    text-align: center; max-width: 640px; margin: 0 auto;
+  }
+  .impact-quote blockquote {
+    font-family: var(--font-display); font-size: 22px; font-style: italic;
+    color: rgba(255,255,255,0.85); line-height: 1.6; margin-bottom: 16px;
+  }
+  .impact-quote cite { font-size: 13px; color: rgba(255,255,255,0.4); font-style: normal; }
+
+  /* ── DASHBOARD PREVIEW ── */
+  .dashboard-section { padding: 100px 80px; background: var(--teal-pale); }
+  .dashboard-inner { max-width: 1100px; margin: 0 auto; }
+  .dashboard-header { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom: 40px; }
+
+  .dash-frame {
+    background: var(--white); border-radius: 24px;
+    box-shadow: 0 20px 80px rgba(28,20,16,0.12);
+    overflow: hidden; border: 1px solid rgba(28,20,16,0.06);
+  }
+
+  .dash-topbar {
+    background: var(--ink); padding: 14px 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .dash-dot { width:12px; height:12px; border-radius:50%; }
+  .dash-dot-r { background:#FF5F57; }
+  .dash-dot-y { background:#FEBC2E; }
+  .dash-dot-g { background:#28C840; }
+  .dash-url {
+    flex:1; background:rgba(255,255,255,0.08); border-radius:8px;
+    padding:6px 14px; font-size:12px; color:rgba(255,255,255,0.5);
+  }
+
+  .dash-body { display:grid; grid-template-columns: 220px 1fr; }
+
+  .dash-sidebar {
+    background: var(--cream); border-right: 1px solid rgba(28,20,16,0.06);
+    padding: 24px 0;
+  }
+  .dash-nav-item {
+    display:flex; align-items:center; gap:10px;
+    padding:12px 24px; font-size:13px; cursor:pointer;
+    transition:background 0.2s; color:var(--ink-mid);
+  }
+  .dash-nav-item:hover { background:var(--warm); }
+  .dash-nav-item.active { background:var(--rust-pale); color:var(--rust); font-weight:500; }
+  .dash-nav-icon { font-size:16px; }
+
+  .dash-main { padding:28px; background:var(--cream); }
+
+  .dash-kpis { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:24px; }
+  .dash-kpi {
+    background:var(--white); border-radius:14px; padding:20px 24px;
+    border:1px solid rgba(28,20,16,0.06);
+  }
+  .kpi-label { font-size:11px; color:var(--ink-light); font-weight:500; text-transform:uppercase; letter-spacing:0.3px; margin-bottom:8px; }
+  .kpi-val { font-family:var(--font-display); font-size:28px; font-weight:900; color:var(--ink); }
+  .kpi-delta { font-size:11px; margin-top:4px; }
+  .delta-up { color:var(--teal); }
+  .delta-dn { color:var(--rust); }
+
+  .dash-table { background:var(--white); border-radius:14px; overflow:hidden; border:1px solid rgba(28,20,16,0.06); }
+  .table-head { display:grid; grid-template-columns:2fr 1.2fr 1fr 1fr; padding:12px 20px; background:var(--warm); }
+  .th-cell { font-size:11px; font-weight:500; color:var(--ink-light); text-transform:uppercase; letter-spacing:0.3px; }
+  .table-row { display:grid; grid-template-columns:2fr 1.2fr 1fr 1fr; padding:14px 20px; border-top:1px solid rgba(28,20,16,0.04); align-items:center; }
+  .table-row:hover { background:var(--cream); }
+  .td-cell { font-size:13px; color:var(--ink); }
+  .td-sub { font-size:11px; color:var(--ink-light); margin-top:2px; }
+  .status-pill { display:inline-block; padding:3px 10px; border-radius:100px; font-size:11px; font-weight:500; }
+  .pill-green { background:var(--teal-pale); color:var(--teal); }
+  .pill-orange { background:var(--rust-pale); color:var(--rust); }
+  .pill-yellow { background:var(--gold-pale); color:var(--gold); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink); padding: 60px 80px 40px;
+  }
+  .footer-inner { max-width: 1100px; margin: 0 auto; }
+  .footer-top {
+    display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 60px; margin-bottom: 48px;
+  }
+  .footer-logo {
+    font-family: var(--font-display); font-size: 24px; font-weight: 900;
+    color: var(--white); margin-bottom: 12px;
+  }
+  .footer-logo span { color: var(--rust-light); }
+  .footer-tagline { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.7; font-weight: 300; }
+
+  .footer-col-title { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.6); text-transform:uppercase; letter-spacing:1px; margin-bottom:16px; }
+  .footer-links { list-style:none; display:flex; flex-direction:column; gap:10px; }
+  .footer-links a { text-decoration:none; font-size:14px; color:rgba(255,255,255,0.4); transition:color 0.2s; }
+  .footer-links a:hover { color:var(--rust-light); }
+
+  .footer-bottom {
+    display:flex; justify-content:space-between; align-items:center;
+    padding-top:24px; border-top:1px solid rgba(255,255,255,0.06);
+  }
+  .footer-copy { font-size:12px; color:rgba(255,255,255,0.3); }
+  .footer-heart { font-size:12px; color:var(--rust-light); }
+
+  /* ── ANIMATIONS ── */
+  .fade-up {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── TOAST ── */
+  .toast {
+    position:fixed; bottom:32px; right:32px; z-index:999;
+    background:var(--ink); color:var(--white);
+    padding:16px 24px; border-radius:14px;
+    font-size:14px; font-weight:500;
+    transform:translateY(100px); opacity:0;
+    transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s;
+    box-shadow:0 8px 30px rgba(0,0,0,0.3);
+    border-left:4px solid var(--teal);
+  }
+  .toast.show { transform:translateY(0); opacity:1; }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:900px) {
+    nav { padding:16px 24px; }
+    .nav-links { display:none; }
+    .hero { grid-template-columns:1fr; }
+    .hero-right { display:none; }
+    .hero-left { padding:60px 24px 48px; }
+    .section, .listing-section, .hospitals-section, .impact-section, .dashboard-section { padding:70px 24px; }
+    .listing-inner { grid-template-columns:1fr; }
+    .listing-info { position:static; }
+    .hospital-grid { grid-template-columns:1fr; }
+    .steps { grid-template-columns:1fr; }
+    .step:first-child { border-radius:24px 24px 0 0; }
+    .step:last-child { border-radius:0 0 24px 24px; }
+    .impact-grid { grid-template-columns:repeat(2,1fr); }
+    .footer-top { grid-template-columns:1fr 1fr; gap:32px; }
+    .dash-body { grid-template-columns:1fr; }
+    .dash-sidebar { display:none; }
+    .dashboard-header { flex-direction:column; align-items:flex-start; gap:16px; }
+    footer { padding:48px 24px 32px; }
+    .hospitals-header { flex-direction:column; align-items:flex-start; gap:16px; }
+  }
+</style>
+</head>
+<body>
+<h1>TEST PAGE</h1>
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Toy<span>Bank</span></div>
+  <ul class="nav-links">
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#donate">Donate a toy</a></li>
+    <li><a href="#hospitals">Hospitals</a></li>
+    <li><a href="#impact">Our impact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="showToast('Opening donation form...')">Donate a toy</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-left fade-up">
+    <div class="hero-tag">Making a difference since 2024</div>
+    <h1 class="hero-headline">
+      Give a toy,<br>give a child<br><em>a moment</em> of<br><span class="teal">pure joy.</span>
+    </h1>
+    <p class="hero-sub">
+      ToyBank connects families with gently used toys to pediatric centres across India — bringing smiles to children facing serious illness, completely free of charge.
+    </p>
+    <div class="hero-actions">
+      <a href="#donate" class="btn-primary">Donate a toy today</a>
+      <a href="#how" class="btn-outline">See how it works</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-num">2,400+</span>
+        <span class="stat-label">Toys donated</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">18</span>
+        <span class="stat-label">Partner hospitals</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">1,100+</span>
+        <span class="stat-label">Children reached</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-card-stack">
+      <div class="h-card h-card-1">
+        <div class="h-card-icon icon-teal">🧸</div>
+        <div class="h-card-title">Soft toys dispatched</div>
+        <div class="h-card-sub">AIIMS Pediatric Ward, Delhi</div>
+        <span class="h-card-tag tag-green">Delivered today</span>
+      </div>
+      <div class="h-card h-card-2">
+        <div class="h-card-icon icon-rust">🎲</div>
+        <div class="h-card-title">New listing received</div>
+        <div class="h-card-sub">Board games · Excellent condition</div>
+        <span class="h-card-tag tag-orange">Pending match</span>
+      </div>
+      <div class="h-card h-card-3">
+        <div class="h-card-icon icon-gold">🏥</div>
+        <div class="h-card-title">Hospital request</div>
+        <div class="h-card-sub">Tata Memorial, Mumbai — 12 toys</div>
+        <span class="h-card-tag tag-yellow">High priority</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how">
+  <div class="section-inner">
+    <p class="section-eyebrow fade-up">The process</p>
+    <h2 class="section-title fade-up">Three simple steps to<br><em>change a child's day</em></h2>
+    <p class="section-sub fade-up">From your home to a hospital ward in just days. No logistics hassle, no cost to you.</p>
+    <div class="steps fade-up">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-icon icon-rust">📦</div>
+        <h3 class="step-title">List your toy</h3>
+        <p class="step-desc">Upload a photo, describe the toy's condition and age group. Takes under 2 minutes. We accept soft toys, puzzles, games, art kits, and more.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-icon icon-teal">🔗</div>
+        <h3 class="step-title">We match & verify</h3>
+        <p class="step-desc">Our team reviews listings and matches toys to hospital requests based on age group, condition, and urgency. Safety is our top priority.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-icon icon-gold">✨</div>
+        <h3 class="step-title">Joy gets delivered</h3>
+        <p class="step-desc">We arrange free pickup or drop-off. You get a photo update when your toy reaches a child. Track your toy's journey in real time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DONATE FORM -->
+<section class="listing-section" id="donate">
+  <div class="listing-inner">
+    <div class="listing-info fade-up">
+      <p class="section-eyebrow">List a toy</p>
+      <h2 class="section-title">Your child<br>outgrew it.<br>Another child<br><em>needs it.</em></h2>
+      <p class="section-sub" style="margin-bottom:0">That Lego set collecting dust. The stuffed animal on the shelf. Give it a second life where it matters most.</p>
+      <div class="listing-reasons">
+        <div class="reason">
+          <div class="reason-icon icon-teal">🛡️</div>
+          <div class="reason-text">
+            <h4>100% safe & verified</h4>
+            <p>Every toy is inspected before reaching a child. We follow strict safety guidelines.</p>
+          </div>
+        </div>
+        <div class="reason">
+          <div class="reason-icon icon-rust">🚚</div>
+          <div class="reason-text">
+            <h4>Free pickup from your door</h4>
+            <p>No effort needed. We arrange collection at a time convenient for you.</p>
+          </div>
+        </div>
+        <div class="reason">
+          <div class="reason-icon icon-gold">📸</div>
+          <div class="reason-text">
+            <h4>See your impact</h4>
+            <p>Receive a photo and note when your toy reaches a child who needed it.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="listing-form fade-up">
+      <h3 class="form-title">List a toy for donation</h3>
+      <p class="form-sub">Fill in the details below. Our team will review within 24 hours.</p>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Your name</label>
+          <input id="name" class="form-input" type="text" placeholder="Priya Sharma">
+        <div class="form-group">
+          <label class="form-label">Phone number</label>
+          <input id="phone" class="form-input" type="tel" placeholder="+91 98765 43210">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">City</label>
+          <input id="city" class="form-input" type="text" placeholder="Mumbai">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Pincode</label>
+          <input class="form-input" type="text" placeholder="400001">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Toy name / description</label>
+        <input id="toy" class="form-input" type="text" placeholder="e.g. LEGO Technic set, wooden puzzles...">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select id="category" class="form-select"></select>
+            <option>Soft toys / plush</option>
+            <option>Puzzles & games</option>
+            <option>Art & craft kits</option>
+            <option>Educational toys</option>
+            <option>Outdoor toys</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Suitable age</label>
+          <select class="form-select">
+            <option>0–2 years</option>
+            <option>3–5 years</option>
+            <option>6–8 years</option>
+            <option>9–12 years</option>
+            <option>12+ years</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Condition</label>
+        <div class="condition-options">
+          <div class="cond-opt">
+            <input type="radio" name="condition" id="c1" value="excellent">
+            <label class="cond-label" for="c1">Excellent</label>
+          </div>
+          <div class="cond-opt">
+            <input type="radio" name="condition" id="c2" value="good" checked>
+            <label class="cond-label" for="c2">Good</label>
+          </div>
+          <div class="cond-opt">
+            <input type="radio" name="condition" id="c3" value="fair">
+            <label class="cond-label" for="c3">Fair</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Additional notes (optional)</label>
+        <textarea class="form-textarea" placeholder="Any details about missing pieces, special features, etc."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Upload photo</label>
+        <div class="upload-zone" onclick="showToast('Photo upload coming soon!')">
+          <div class="upload-icon">📷</div>
+          <div class="upload-text">Click to upload a photo of the toy</div>
+          <div class="upload-hint">JPG, PNG up to 5MB</div>
+        </div>
+      </div>
+
+      <button type="button" class="form-submit" onclick="handleSubmit()">
+  Submit donation listing →
+</button>
+      <div id="ml-result" style="margin-top:20px;font-weight:500;color:#C85A2A;"></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOSPITALS -->
+<section class="hospitals-section" id="hospitals">
+  <div class="hospitals-inner">
+    <div class="hospitals-header fade-up">
+      <div>
+        <p class="section-eyebrow">Partner hospitals</p>
+        <h2 class="section-title">Who receives<br>your <em>donations</em></h2>
+      </div>
+      <a href="#donate" class="btn-primary">Donate now</a>
+    </div>
+    <div class="hospital-grid fade-up">
+      <div class="hospital-card">
+        <div class="hospital-banner banner-rust">🏥</div>
+        <div class="hospital-body">
+          <h3 class="hospital-name">Tata Memorial Centre</h3>
+          <p class="hospital-city">Mumbai, Maharashtra</p>
+          <div class="hospital-needs">
+            <span class="need-tag">Soft toys</span>
+            <span class="need-tag">Art kits</span>
+            <span class="need-tag">Puzzles</span>
+          </div>
+          <div class="hospital-urgency">
+            <div class="urgency-dot dot-red"></div>
+            <span class="urgency-text urgent-red">Urgent — 24 toys needed</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hospital-card">
+        <div class="hospital-banner banner-teal">🏨</div>
+        <div class="hospital-body">
+          <h3 class="hospital-name">AIIMS Pediatric Ward</h3>
+          <p class="hospital-city">New Delhi</p>
+          <div class="hospital-needs">
+            <span class="need-tag">Board games</span>
+            <span class="need-tag">Books</span>
+            <span class="need-tag">Soft toys</span>
+          </div>
+          <div class="hospital-urgency">
+            <div class="urgency-dot dot-orange"></div>
+            <span class="urgency-text urgent-orange">Moderate — 10 toys needed</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hospital-card">
+        <div class="hospital-banner banner-gold">🏫</div>
+        <div class="hospital-body">
+          <h3 class="hospital-name">Narayana Health</h3>
+          <p class="hospital-city">Bengaluru, Karnataka</p>
+          <div class="hospital-needs">
+            <span class="need-tag">Educational</span>
+            <span class="need-tag">Creative kits</span>
+            <span class="need-tag">Games</span>
+          </div>
+          <div class="hospital-urgency">
+            <div class="urgency-dot dot-green"></div>
+            <span class="urgency-text urgent-green">Well stocked — accepting</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section class="impact-section" id="impact">
+  <div class="impact-inner">
+    <h2 class="impact-title fade-up">The <em>numbers</em> behind<br>every smile</h2>
+    <p class="impact-sub fade-up">Small acts of kindness, measured in real impact.</p>
+
+    <div class="impact-grid fade-up">
+      <div class="impact-stat">
+        <div class="impact-num">2,4<span>00</span></div>
+        <div class="impact-label">Toys donated</div>
+      </div>
+      <div class="impact-stat">
+        <div class="impact-num">1,1<span>00</span></div>
+        <div class="impact-label">Children reached</div>
+      </div>
+      <div class="impact-stat">
+        <div class="impact-num"><span>18</span></div>
+        <div class="impact-label">Partner hospitals</div>
+      </div>
+      <div class="impact-stat">
+        <div class="impact-num"><span>9</span></div>
+        <div class="impact-label">Cities covered</div>
+      </div>
+    </div>
+
+    <div class="impact-quote fade-up">
+      <blockquote>"My daughter stopped crying when she got the stuffed rabbit. For the first time in weeks, she just… played."</blockquote>
+      <cite>— Parent, Tata Memorial Centre, Mumbai</cite>
+    </div>
+  </div>
+</section>
+
+<!-- ADMIN DASHBOARD PREVIEW -->
+<section class="dashboard-section" id="dashboard">
+  <div class="dashboard-inner">
+    <div class="dashboard-header fade-up">
+      <div>
+        <p class="section-eyebrow">Platform preview</p>
+        <h2 class="section-title">Built for<br><em>transparency</em></h2>
+      </div>
+      <p style="font-size:14px;color:var(--ink-light);max-width:280px;font-weight:300;line-height:1.7">
+        Hospitals and admins get a real-time dashboard to track inventory, requests, and deliveries.
+      </p>
+    </div>
+
+    <div class="dash-frame fade-up">
+      <div class="dash-topbar">
+        <div class="dash-dot dash-dot-r"></div>
+        <div class="dash-dot dash-dot-y"></div>
+        <div class="dash-dot dash-dot-g"></div>
+        <div class="dash-url">toybank.in/admin/dashboard</div>
+      </div>
+      <div class="dash-body">
+        <div class="dash-sidebar">
+          <div class="dash-nav-item active"><span class="dash-nav-icon">📊</span> Overview</div>
+          <div class="dash-nav-item"><span class="dash-nav-icon">📦</span> Toy listings</div>
+          <div class="dash-nav-item"><span class="dash-nav-icon">🏥</span> Hospitals</div>
+          <div class="dash-nav-item"><span class="dash-nav-icon">🔗</span> Matches</div>
+          <div class="dash-nav-item"><span class="dash-nav-icon">🚚</span> Deliveries</div>
+          <div class="dash-nav-item"><span class="dash-nav-icon">⚙️</span> Settings</div>
+        </div>
+        <div class="dash-main">
+          <div class="dash-kpis">
+            <div class="dash-kpi">
+              <div class="kpi-label">Pending listings</div>
+              <div class="kpi-val">34</div>
+              <div class="kpi-delta delta-up">↑ 8 new today</div>
+            </div>
+            <div class="dash-kpi">
+              <div class="kpi-label">Active matches</div>
+              <div class="kpi-val">12</div>
+              <div class="kpi-delta delta-up">↑ 3 this week</div>
+            </div>
+            <div class="dash-kpi">
+              <div class="kpi-label">Urgent requests</div>
+              <div class="kpi-val">5</div>
+              <div class="kpi-delta delta-dn">↑ needs attention</div>
+            </div>
+          </div>
+          <div class="dash-table">
+            <div class="table-head">
+              <span class="th-cell">Toy listing</span>
+              <span class="th-cell">Matched to</span>
+              <span class="th-cell">Date</span>
+              <span class="th-cell">Status</span>
+            </div>
+            <div class="table-row">
+              <div><div class="td-cell">LEGO Technic set</div><div class="td-sub">Age 8–12 · Excellent</div></div>
+              <div class="td-cell">Tata Memorial, Mumbai</div>
+              <div class="td-cell">Today</div>
+              <div><span class="status-pill pill-green">Delivered</span></div>
+            </div>
+            <div class="table-row">
+              <div><div class="td-cell">Soft bunny rabbit</div><div class="td-sub">Age 0–3 · Good</div></div>
+              <div class="td-cell">AIIMS Delhi</div>
+              <div class="td-cell">Yesterday</div>
+              <div><span class="status-pill pill-orange">In transit</span></div>
+            </div>
+            <div class="table-row">
+              <div><div class="td-cell">Watercolour kit</div><div class="td-sub">Age 6–10 · Excellent</div></div>
+              <div class="td-cell">Narayana, Bengaluru</div>
+              <div class="td-cell">Apr 5</div>
+              <div><span class="status-pill pill-yellow">Matched</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">Toy<span>Bank</span></div>
+        <p class="footer-tagline">Connecting surplus toys with children who need them most. A small act of kindness that creates ripples of joy.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Platform</div>
+        <ul class="footer-links">
+          <li><a href="#">Donate a toy</a></li>
+          <li><a href="#">Request toys</a></li>
+          <li><a href="#">Track donation</a></li>
+          <li><a href="#">Admin login</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">About</div>
+        <ul class="footer-links">
+          <li><a href="#">Our mission</a></li>
+          <li><a href="#">Partner hospitals</a></li>
+          <li><a href="#">Impact reports</a></li>
+          <li><a href="#">Press</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <ul class="footer-links">
+          <li><a href="#">hello@toybank.in</a></li>
+          <li><a href="#">+91 98765 00000</a></li>
+          <li><a href="#">Jaipur, Rajasthan</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2024 ToyBank. All rights reserved.</span>
+      <span class="footer-heart">Made with love for India's bravest children ♥</span>
+    </div>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+ async function handleSubmit() {
+  try {
+    // 🔹 Safe selection (no crash)
+    const selects = document.querySelectorAll('.form-select');
+
+    const category = selects[0]?.value || "soft toy";
+    const age = selects[1]?.value || "6–8 years";
+
+    const cityInput = document.querySelector('input[placeholder="Mumbai"]');
+    const city = cityInput?.value || "delhi";
+
+    const conditionEl = document.querySelector('input[name="condition"]:checked');
+    const condition = conditionEl?.value || "good";
+
+    const res = await fetch("/predict", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        category,
+        age,
+        city: city.toLowerCase(),
+        condition
+      })
+    });
+
+    const data = await res.json();
+
+    // 🔥 Show result in UI
+    document.getElementById("ml-result").innerHTML =
+      `🎯 Best Match: <b>${data.hospital}</b>`;
+
+  } catch (err) {
+    console.error(err);
+    alert("Error connecting ML");
+  }
+}
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const sections = document.querySelectorAll('section[id]');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 100) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--rust)' : '';
+    });
+  });
+</script>
+</body>
+</html>
